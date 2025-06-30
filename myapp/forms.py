@@ -1,6 +1,5 @@
 from django import forms
-from .models import NewsArticle
-from .models import Comment
+from .models import NewsArticle,Comment,UserProfile
 
 class NewsArticleForm(forms.ModelForm):
     class Meta:
@@ -14,3 +13,8 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'content': forms.Textarea(attrs={'rows': 3, 'placeholder': 'نظر خود را بنویسید...'}),
         }
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['bio', 'avatar']

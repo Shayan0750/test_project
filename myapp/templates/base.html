@@ -27,17 +27,20 @@
             <li><a href="{% url 'contact' %}">تماس با ما</a></li>
 
             {% if user.is_authenticated %}
+            <li><a href="{% url 'profile' %}">پروفایل من</a></li>
+
             <a href="{% url 'article_create' %}" class="create-article-btn">+ نوشتن مقاله</a>
+
             <li>
                 <form action="{% url 'logout' %}" method="post">
                     {% csrf_token %}
                     <button class="logout-btn">خروج</button>
                 </form>
             </li>
-        {% else %}
+            {% else %}
             <li><a href="{% url 'login' %}">ورود</a></li>
             <li><a href="{% url 'signup' %}">ثبت‌نام</a></li>
-        {% endif %}
+            {% endif %}
         </ul>
     </div>
 

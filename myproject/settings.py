@@ -130,3 +130,6 @@ LOGOUT_REDIRECT_URL = 'home'
 # settings.py
 
 LOGIN_REDIRECT_URL = 'home'  # نام URL صفحه اصلی
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

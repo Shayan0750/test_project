@@ -14,6 +14,9 @@ urlpatterns = [
     path('articles/<int:pk>/ajax/', views.article_detail_ajax, name='article_detail_ajax'),
     path('category/<int:category_id>/', views.articles_by_category, name='category_articles'),
     path('bookmarks/', views.bookmarked_articles, name='bookmarked_articles'),
+    path('profile/', views.profile_view, name='profile'),
+    path('profile/edit/', views.edit_profile, name='edit_profile'),
+
 
 
 

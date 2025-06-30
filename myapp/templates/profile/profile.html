@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="box">
+    <h2>پروفایل {{ profile.user.username }}</h2>
+    <img src="{{ profile.avatar.url }}" width="100" style="border-radius: 10px;">
+    <p><strong>درباره من:</strong> {{ profile.bio|default:"-" }}</p>
+    <a class="btn" href="{% url 'edit_profile' %}">ویرایش پروفایل</a>
+  </div>
+{% endblock %}

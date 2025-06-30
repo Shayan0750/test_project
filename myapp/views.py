@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import NewsArticle, Category, Like, Comment,BookmarkedArticle
-from .forms import NewsArticleForm, CommentForm
-from django.http import HttpResponseForbidden,JsonResponse, Http404
+from .models import NewsArticle, Category, Like,BookmarkedArticle
+from .forms import NewsArticleForm, CommentForm, ProfileForm
+from django.http import HttpResponseForbidden,JsonResponse
 from django.utils.html import escape
 
 
@@ -152,3 +152,20 @@ def article_detail(request, pk):
 def bookmarked_articles(request):
     bookmarks = BookmarkedArticle.objects.filter(user=request.user).select_related('article')
     return render(request, 'articles/bookmarked_list.html', {'bookmarks': bookmarks})
+
+@login_required
+def profile_view(request):
+    profile = request.user.userprofile
+    return render(request, 'profile/profile.html', {'profile': profile})
+
+@login_required
+def edit_profile(request):
+    profile = request.user.userprofile
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = ProfileForm(instance=profile)
+    return render(request, 'profile/edit_profile.html', {'form': form})

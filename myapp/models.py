@@ -47,3 +47,11 @@ class BookmarkedArticle(models.Model):
 
     class Meta:
         unique_together = ('user', 'article')
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField(blank=True)
+    avatar = models.ImageField(upload_to='avatars/', default='avatars/default.png')
+
+    def __str__(self):
+        return self.user.username
