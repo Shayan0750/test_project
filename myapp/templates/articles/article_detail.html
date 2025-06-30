@@ -7,6 +7,38 @@
     <p>{{ article.content|linebreaks }}</p>
     <p><small>آخرین ویرایش: {{ article.updated_at }}</small></p>
 
+    <form method="post">
+    {% csrf_token %}
+    <button type="submit" name="like" class="btn">
+        {% if is_liked %}❤️ لایک شده{% else %}🤍 لایک{% endif %} ({{ article.like_count }})
+    </button>
+    </form>
+
+    <hr>
+
+    <h3>نظرات:</h3>
+  {% for comment in comments %}
+  <div class="comment">
+    <strong>{{ comment.user.username }}</strong> - {{ comment.created_at|date:"Y/m/d H:i" }}<br>
+    {{ comment.content|linebreaks }}
+  </div>
+  <hr>
+{% empty %}
+  <p>نظری ثبت نشده است.</p>
+{% endfor %}
+
+  {% if user.is_authenticated %}
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" name="comment" class="btn">ارسال نظر</button>
+  </form>
+  {% else %}
+  <p><a href="{% url 'login' %}">برای ارسال نظر وارد شوید</a>.</p>
+  {% endif %}
+
+
+
     <div class="article-actions">
       {% if user == article.author or user.is_superuser %}
           <a href="{% url 'article_edit' article.pk %}" class="btn-edit">✏️ ویرایش</a>

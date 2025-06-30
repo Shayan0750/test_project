@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import NewsArticle, Category
-from .forms import NewsArticleForm
+from .models import NewsArticle, Category, Like, Comment
+from .forms import NewsArticleForm, CommentForm
 from django.http import HttpResponseForbidden,JsonResponse, Http404
 from django.utils.html import escape
 
@@ -103,4 +103,35 @@ def articles_by_category(request, category_id):
     return render(request, 'articles/articles_by_category.html', {
         'category': category,
         'articles': articles
+    })
+
+def article_detail(request, pk):
+    article = get_object_or_404(NewsArticle, pk=pk)
+    comments = article.comments.all().order_by('-created_at')
+    is_liked = article.likes.filter(user=request.user).exists() if request.user.is_authenticated else False
+
+    if request.method == 'POST':
+        if 'like' in request.POST:
+            if request.user.is_authenticated:
+                if is_liked:
+                    article.likes.filter(user=request.user).delete()
+                else:
+                    Like.objects.create(user=request.user, article=article)
+                return redirect('article_detail', pk=pk)
+        elif 'comment' in request.POST:
+            form = CommentForm(request.POST)
+            if form.is_valid() and request.user.is_authenticated:
+                new_comment = form.save(commit=False)
+                new_comment.user = request.user
+                new_comment.article = article
+                new_comment.save()
+                return redirect('article_detail', pk=pk)
+    else:
+        form = CommentForm()
+
+    return render(request, 'articles/article_detail.html', {
+        'article': article,
+        'comments': comments,
+        'form': form,
+        'is_liked': is_liked,
     })

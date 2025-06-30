@@ -11,6 +11,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+    
 
 class NewsArticle(models.Model):
     title = models.CharField(max_length=200)
@@ -22,3 +23,19 @@ class NewsArticle(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def like_count(self):
+        return self.likes.count()
+
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    article = models.ForeignKey(NewsArticle, on_delete=models.CASCADE, related_name='likes')
+
+    class Meta:
+        unique_together = ('user', 'article')
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    article = models.ForeignKey(NewsArticle, on_delete=models.CASCADE, related_name='comments')
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
