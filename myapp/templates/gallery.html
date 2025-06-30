@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}  <!-- این خط را اضافه کنید -->
+
+{% block title %}گالری تصاویر - هوش مصنوعی{% endblock %}
+
+{% block content %}
+<div class="gallery">
+    <img src="{% static 'images/ai1.jpg' %}" alt="تصویر ۱">
+    <img src="{% static 'images/ai2.jpg' %}" alt="تصویر ۲">
+    <img src="{% static 'images/ai3.jpg' %}" alt="تصویر ۳">
+</div>
+{% endblock %}

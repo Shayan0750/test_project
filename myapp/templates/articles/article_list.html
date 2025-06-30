@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="main-content">
+    <h2>مقالات</h2>
+    {% for article in articles %}
+      <div class="box" id="article-{{ article.pk }}">
+        <h3><a href="{% url 'article_detail' article.pk %}">{{ article.title }}</a></h3>
+        <p>توسط {{ article.author.username }} | {{ article.created_at|date:"Y/m/d H:i" }}</p>
+
+        <div class="preview">
+          {% with article.content|truncatechars:200 as preview_content %}
+            <p>{{ preview_content }}</p>
+          {% endwith %}
+        </div>
+
+        <div class="button-row" style="display: flex; gap: 10px; flex-direction: row-reverse;">
+          <a href="{% url 'article_detail' article.pk %}" class="btn btn-readmore">ادامه مطلب...</a>
+          <button class="btn btn-readmore ajax-load" data-id="{{ article.pk }}">ادامه مطلب در این صفحه</button>
+        </div>
+
+        <div class="full-content" style="display: none; margin-top: 10px;"></div>
+      </div>
+    {% empty %}
+      <p>هیچ مقاله‌ای هنوز منتشر نشده است.</p>
+    {% endfor %}
+  </div>
+
+  <!-- JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('.ajax-load').click(function () {
+        const articleId = $(this).data('id');
+        const contentBox = $(`#article-${articleId} .full-content`);
+
+        if (contentBox.is(':visible')) {
+          contentBox.slideUp();
+        } else {
+          if (contentBox.is(':empty')) {
+            $.get(`/articles/${articleId}/ajax/`, function (data) {
+              contentBox.html(`<p>${data.content}</p>`).slideDown();
+            }).fail(function () {
+              alert('بارگیری مقاله با خطا مواجه شد.');
+            });
+          } else {
+            contentBox.slideDown();
+          }
+        }
+      });
+    });
+  </script>
+{% endblock %}

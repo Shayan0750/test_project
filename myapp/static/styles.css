@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&display=swap');
+
+body {
+    font-family: 'Vazirmatn', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    direction: rtl;
+    color: #333;
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+}
+
+/* سایدبار */
+.sidebar {
+    width: 220px;
+    background: linear-gradient(135deg, #444, #222);
+    color: #fff;
+    position: fixed;
+    height: 100%;
+    top: 0;
+    right: 0;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+}
+
+.sidebar h3 {
+    margin-top: 0;
+    font-weight: 700;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.sidebar ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    text-decoration: none;
+}
+
+/* محتوای اصلی */
+.content {
+    margin-right: 250px;
+    padding: 20px;
+}
+
+header {
+    background-color: #444;
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* جعبه‌ها */
+.main-content .box {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* گالری */
+.gallery img {
+    width: 100%;
+    max-width: 300px;
+    margin: 10px;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.gallery img:hover {
+    transform: scale(1.05);
+}
+
+/* فرم تماس */
+.contact-form, .contact-info, .auth-form {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.contact-form input, .contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border 0.3s;
+}
+
+.contact-form input:focus, .contact-form textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.contact-form button {
+    background: #007bff;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.contact-form button:hover {
+    background: #0056b3;
+}
+
+/* فرم احراز هویت */
+.auth-form h2 {
+    margin-top: 0;
+    font-weight: bold;
+}
+
+.auth-form a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.auth-form a:hover {
+    text-decoration: underline;
+}
+
+.logout-btn {
+    background-color: #d9534f; /* Red color for logout */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+.logout-btn:hover {
+    background-color: #c9302c; /* Darker red on hover */
+}
+
+.create-article-btn {
+    display: inline-block;
+    background-color: #5cb85c;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin: 10px 0;
+    transition: background-color 0.3s ease;
+}
+
+.create-article-btn:hover {
+    background-color: #4cae4c;
+}
+
+/* Prevent long words from breaking layout */
+.box, .main-content,.article-preview, .article-content, p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.article-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    direction: rtl;
+}
+
+.article-actions a.btn-edit,
+.article-actions button.btn-delete {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.article-actions a.btn-edit {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.article-actions a.btn-edit:hover {
+    background-color: #45a049;
+}
+
+.article-actions button.btn-delete {
+    background-color: #f44336; /* Red */
+    color: white;
+}
+
+.article-actions button.btn-delete:hover {
+    background-color: #d32f2f;
+}
+
+.article-actions a.btn-edit,
+.article-actions button.btn-delete {
+    font-family: inherit;  /* uses same font as the rest of the page */
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    direction: ltr; /* show icon on right */
+}
+
+.article-title,
+.article-snippet {
+    font-family: inherit;
+}
+
+.btn {
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: Vazirmatn;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.btn-readmore {
+    background-color: #333;
+    color: #fff;
+    padding: 6px 12px;
+}
+
+.btn-readmore:hover {
+    background-color: #555;
+}
+
+.box h3 a {
+    font-family: Vazirmatn;
+    font-size: 20px;
+    font-weight: 600;
+    color: #222;
+    text-decoration: none;
+    display: inline-block;
+    transition: color 0.2s ease-in-out;
+}
+
+.box h3 a:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+

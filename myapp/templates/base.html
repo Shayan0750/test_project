@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}هوش مصنوعی{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <!-- کادر ثابت سمت راست -->
+    <div class="sidebar">
+        <h3>دسترسی سریع</h3>
+        <ul>
+            <li><a href="{% url 'home' %}">صفحه اصلی</a></li>
+            <li><a href="{% url 'article_list' %}">مقالات</a></li>
+
+            {% for cat in categories %}
+            <li><a href="{% url 'category_articles' cat.id %}">{{ cat.name }}</a></li>
+            {% empty %}
+            <li>هیچ دسته‌ای نیست</li>
+            {% endfor %}
+
+            <li><a href="{% url 'gallery' %}">گالری تصاویر</a></li>
+            <li><a href="{% url 'contact' %}">تماس با ما</a></li>
+
+            {% if user.is_authenticated %}
+            <a href="{% url 'article_create' %}" class="create-article-btn">+ نوشتن مقاله</a>
+            <li>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button class="logout-btn">خروج</button>
+                </form>
+            </li>
+        {% else %}
+            <li><a href="{% url 'login' %}">ورود</a></li>
+            <li><a href="{% url 'signup' %}">ثبت‌نام</a></li>
+        {% endif %}
+        </ul>
+    </div>
+
+    <!-- محتوای اصلی -->
+    <div class="content">
+        <header>
+            <h1>{% block header %}هوش مصنوعی - آینده فناوری{% endblock %}</h1>
+        </header>
+
+        {% block content %}
+        <!-- محتوای صفحه در اینجا قرار می‌گیرد -->
+        {% endblock %}
+    </div>
+</body>
+</html>

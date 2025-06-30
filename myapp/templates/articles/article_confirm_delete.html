@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="auth-form">
+    <h2>آیا مطمئن هستید که می‌خواهید این مقاله را حذف کنید؟</h2>
+    <p><strong>{{ article.title }}</strong></p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">بله، حذف شود</button>
+        <a href="{% url 'article_detail' article.pk %}">خیر، بازگشت</a>
+    </form>
+</div>
+{% endblock %}

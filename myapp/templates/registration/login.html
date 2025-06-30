@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ورود{% endblock %}
+
+{% block content %}
+<div class="auth-form">
+    <h2>ورود به سایت</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">ورود</button>
+    </form>
+    <p>حساب کاربری ندارید؟ <a href="{% url 'signup' %}">ثبت‌نام کنید</a>.</p>
+</div>
+{% endblock %}

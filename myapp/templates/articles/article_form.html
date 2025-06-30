@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="auth-form">
+    <h2>{% if form.instance.pk %}ویرایش مقاله{% else %}مقاله جدید{% endif %}</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">ذخیره</button>
+    </form>
+  </div>
+{% endblock %}

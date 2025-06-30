@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="main-content">
+    <h2>مقالات در دسته: {{ category.name }}</h2>
+    {% for article in articles %}
+      <div class="box">
+        <h3><a href="{% url 'article_detail' article.pk %}">{{ article.title }}</a></h3>
+        <p>توسط {{ article.author.username }} | {{ article.created_at|date:"Y/m/d H:i" }}</p>
+        <p>{{ article.content|truncatechars:200 }}</p>
+        <a href="{% url 'article_detail' article.pk %}">ادامه مطلب...</a>
+      </div>
+    {% empty %}
+      <p>هیچ مقاله‌ای در این دسته وجود ندارد.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="main-content box article-content">
+    <h2>{{ article.title }}</h2>
+    <p><strong>نویسنده:</strong> {{ article.author.username }}</p>
+    <p>{{ article.content|linebreaks }}</p>
+    <p><small>آخرین ویرایش: {{ article.updated_at }}</small></p>
+
+    <div class="article-actions">
+      {% if user == article.author or user.is_superuser %}
+          <a href="{% url 'article_edit' article.pk %}" class="btn-edit">✏️ ویرایش</a>
+  
+          <form action="{% url 'article_delete' article.pk %}" method="post" onsubmit="return confirm('آیا مطمئن هستید که می‌خواهید این مقاله را حذف کنید؟');" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn-delete">🗑️ حذف مقاله</button>
+          </form>
+      {% endif %}
+  </div>
+  
+  </div>
+{% endblock %}
