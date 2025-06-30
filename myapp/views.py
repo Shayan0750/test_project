@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import NewsArticle, Category, Like, Comment
+from .models import NewsArticle, Category, Like, Comment,BookmarkedArticle
 from .forms import NewsArticleForm, CommentForm
 from django.http import HttpResponseForbidden,JsonResponse, Http404
 from django.utils.html import escape
@@ -109,6 +109,7 @@ def article_detail(request, pk):
     article = get_object_or_404(NewsArticle, pk=pk)
     comments = article.comments.all().order_by('-created_at')
     is_liked = article.likes.filter(user=request.user).exists() if request.user.is_authenticated else False
+    is_bookmarked = False
 
     if request.method == 'POST':
         if 'like' in request.POST:
@@ -128,6 +129,17 @@ def article_detail(request, pk):
                 return redirect('article_detail', pk=pk)
     else:
         form = CommentForm()
+    
+    if request.user.is_authenticated:
+        is_bookmarked = BookmarkedArticle.objects.filter(user=request.user, article=article).exists()
+
+    if request.method == 'POST' and 'bookmark' in request.POST:
+        if request.user.is_authenticated:
+            if is_bookmarked:
+                BookmarkedArticle.objects.filter(user=request.user, article=article).delete()
+            else:
+                BookmarkedArticle.objects.create(user=request.user, article=article)
+            return redirect('article_detail', pk=pk)
 
     return render(request, 'articles/article_detail.html', {
         'article': article,
@@ -135,3 +147,8 @@ def article_detail(request, pk):
         'form': form,
         'is_liked': is_liked,
     })
+
+@login_required
+def bookmarked_articles(request):
+    bookmarks = BookmarkedArticle.objects.filter(user=request.user).select_related('article')
+    return render(request, 'articles/bookmarked_list.html', {'bookmarks': bookmarks})

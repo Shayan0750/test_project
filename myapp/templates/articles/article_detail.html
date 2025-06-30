@@ -7,6 +7,14 @@
     <p>{{ article.content|linebreaks }}</p>
     <p><small>آخرین ویرایش: {{ article.updated_at }}</small></p>
 
+    <form method="post" style="display: inline;">
+    {% csrf_token %}
+    <button type="submit" name="bookmark" class="btn">
+        {% if is_bookmarked %}🔖 ذخیره شده{% else %}📌 ذخیره مقاله{% endif %}
+    </button>
+    </form>
+
+
     <form method="post">
     {% csrf_token %}
     <button type="submit" name="like" class="btn">

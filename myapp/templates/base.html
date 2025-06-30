@@ -14,6 +14,8 @@
         <ul>
             <li><a href="{% url 'home' %}">صفحه اصلی</a></li>
             <li><a href="{% url 'article_list' %}">مقالات</a></li>
+            <li><a href="{% url 'bookmarked_articles' %}">مقالات ذخیره‌شده</a></li>
+
 
             {% for cat in categories %}
             <li><a href="{% url 'category_articles' cat.id %}">{{ cat.name }}</a></li>

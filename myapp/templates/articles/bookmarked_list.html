@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>مقالات ذخیره‌شده</h2>
+  {% for bookmark in bookmarks %}
+    <div class="box">
+      <h3><a href="{% url 'article_detail' bookmark.article.pk %}">{{ bookmark.article.title }}</a></h3>
+      <p>{{ bookmark.article.content|truncatewords:30 }}</p>
+    </div>
+  {% empty %}
+    <p>هنوز هیچ مقاله‌ای ذخیره نکرده‌اید.</p>
+  {% endfor %}
+{% endblock %}
